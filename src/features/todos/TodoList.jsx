@@ -1,24 +1,22 @@
-import { useTodoState } from '../../Context/todo-context'
-import TodoListItem from './TodoListItem'
+import { useTodoState } from "../../Context/todo-context";
+import TodoListItem from "./TodoListItem";
 
 const TodoList = () => {
-    const todos = useTodoState()
-    const keyTodos = Object.keys(todos)
+  const todos = useTodoState().todos;
+  
+  const todoItem = todos.map((todo) => {
+    return (
+      <TodoListItem
+        key={todo.id}
+        id={todo.id}
+        text={todo.text}
+        color={todo.color}
+        status={todo.completed}
+      />
+    );
+  });
 
+  return <ul className="todo-list">{todoItem}</ul>;
+};
 
-
-    const todoItem = keyTodos.map(key => {
-        return <TodoListItem
-            key={key}
-            id={key}
-            text={todos[key].text}
-            color={todos[key].color} />
-    })
-
-    
-
-
-    return <ul className="todo-list">{todoItem}</ul>
-}
-
-export default TodoList
+export default TodoList;
