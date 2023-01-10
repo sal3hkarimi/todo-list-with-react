@@ -55,9 +55,10 @@ const nextState = produce((state, action) => {
       switch (action.payload) {
         case "All":
           return state;
-        case "Active":
-          const active = state.todos.filter((todo) => todo.completed === false);
-          return active
+          case "Active":
+            const active = state.todos
+            const newActive = active.filter((todo) => todo.completed === false);
+          return newActive
         case "Completed":
           state.todos = state.todos.filter((todo) => todo.completed === true);
           break;
