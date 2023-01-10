@@ -33,7 +33,6 @@ const nextState = produce((state, action) => {
       break;
 
     case actionType.COMPLETED:
-      console.log(state.todos);
       state.todos[id].completed = !state.todos[id].completed;
       break;
 
@@ -49,12 +48,22 @@ const nextState = produce((state, action) => {
       state.todos.map((todo) => (todo.completed = true));
       break;
     case actionType.CLEAR_COMPLETED:
-      state.todos = state.todos.filter((todo) => todo.completed === false);
+      // state.todos.map((todo) => todo.completed !== true && state.todos.slice(state.todos.indexOf(todo), state.todos.indexOf(todo)));
+      // console.log(completedTodos);
       break;
-    // case actionType.FILTER_ACTIVE:
-    //   break;
+    case actionType.FILTER_ACTIVE:
+      switch (action.payload) {
+        case "All":
+          return state;
+        case "Active":
+          const active = state.todos.filter((todo) => todo.completed === false);
+          return active
+        case "Completed":
+          state.todos = state.todos.filter((todo) => todo.completed === true);
+          break;
+      }
+      break;
   }
 });
 
 export const reducer = nextState;
-

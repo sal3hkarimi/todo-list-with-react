@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { actionType } from "../../Context/reducer";
 import { useTodoDispatch, useTodoState } from "../../Context/todo-context";
 
@@ -7,25 +8,30 @@ const StatusFilters = {
   Completed: "completed",
 };
 
-const StatusFilter = ({ value: status }) => {
+
+
+const StatusFilter = () => {
+  const [status, setStatus] = useState(StatusFilters.All)
+  
   const todos = useTodoState();
   const dispatch = useTodoDispatch();
-  const filterTask = () => {
+  const filterTask = (e) => {
+    setStatus(e.target.textContent.toLowerCase())
     dispatch({
       type: actionType.FILTER_ACTIVE,
-      payload: {text: 'ali'}
+      payload: e.target.textContent
     });
   };
   
-
-
+  
   const renderedFilters = Object.keys(StatusFilters).map((key) => {
+    // console.log(key);
     const value = StatusFilters[key];
     const className = value === status ? "selected" : "";
 
     return (
       <li key={value}>
-        <button onClick={filterTask} className={className}>
+        <button onClick={(e)=>filterTask(e)} className={className}>
           {key}
         </button>
       </li>
